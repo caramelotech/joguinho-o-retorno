@@ -85,6 +85,11 @@
   - Pode cruzar através do inimigo, mas não das paredes
   - Spawn: 10% de chance
 
+- **Acelerador Invertido** (Speed Reversal)
+  - Você fica 2x mais lento (-50% velocidade) por 8 segundos
+  - Seu inimigo fica 1.5x mais rápido (+50% velocidade) pelo mesmo tempo
+  - Spawn: 12% de chance (estratégico)
+
 ### Fase 3
 
 - **Sabre** (Cortar Cobra Inimiga)
@@ -111,7 +116,6 @@
 
 - **Velocidade Base:** 150ms por movimento
 - **Frutas no Mapa:** 3 simultâneas
-- **Inimigo IA (se solo):** Movimento aleatório
 - **Spawn Rate Frutas:** A cada 2 segundos
 - **Duração Poderes:** +20% (mais longos)
 
@@ -129,7 +133,6 @@
 - **Obstáculos:** 5-10 blocos estáticos no mapa
 - **Spawn Rate Frutas:** A cada 4 segundos
 - **Duração Poderes:** -20% (mais curtos)
-- **Inimigo IA (se solo):** Movimento inteligente (perseguição)
 
 ### Insane (Extremo)
 
@@ -138,21 +141,20 @@
 - **Obstáculos:** 15-20 blocos estáticos aleatórios
 - **Obstáculos Móveis:** 1-2 obstáculos que se movem
 - **Duração Poderes:** -30% (muito curtos)
-- **Inimigo IA:** Movimento estratégico com lógica de bloqueio
 
 ## 🗺️ Obstáculos
 
-### Fase 2 (Introdução)
+### Fase 3 (Introdução)
 
 - **Blocos Estáticos:** Aparecem em modos Hard e acima
 - **Padrão:** Grade de 3x3 blocos colocados estrategicamente
 
-### Fase 3 (Complexidade)
+### Fase 4 (Complexidade)
 
 - **Blocos Dinâmicos:** Obstáculos que se movem em padrões (horizontal, vertical, espiral)
 - **Portais:** Teleportam a cobra para o lado oposto do mapa
 
-### Fase 4+
+### Fase 5+
 
 - **Plataformas Móveis**
 - **Gaps (Buracos):** Áreas onde as cobras caem
@@ -251,7 +253,7 @@
 - Build v0.3 com obstáculos e 5 poderes totais
 - Sistema de replay funcional
 
-### **Fase 4: Sistema de Skins** (Semana 5)
+### **Fase 4: Sistema de Skins** (Semana 5-6)
 
 **Objetivo:** Customização visual e progression
 
@@ -270,7 +272,7 @@
 - Build v0.4 com sistema de skins
 - 10+ skins disponíveis
 
-### **Fase 5: Preparação para Online** (Semana 5-6)
+### **Fase 5: Preparação para Online** (Semana 6-7)
 
 **Objetivo:** Arquitetura de multiplayer online preparada
 
@@ -306,7 +308,7 @@
 - Sistema de sincronização testado
 - Build v0.5 com estrutura pronta para online
 
-### **Fase 6: Multiplayer Online & Deploy** (Semana 7-8)
+### **Fase 6: Multiplayer Online & Deploy** (Semana 7-9)
 
 **Objetivo:** Jogo online em produção
 
@@ -584,8 +586,9 @@ Resolution: 640x640px
 
 ```
 MVP        → Poderes   → Obstáculos → Skins      → Online    → Expansões
-v0.1          v0.2        v0.3        v0.4        v1.0        v1.x
-Semana 1-2  Semana 3   Semana 4    Semana 5    Semana 6-8  Contínuo
+v0.1          v0.2        v0.3        v0.4        v0.5/v1.0   v1.x
+Semana 1-2  Semana 3   Semana 4    Semana 5-6  Semana 6-7  Contínuo
+                                                 Semana 7-9
 ```
 
 ## 🎯 Métricas de Sucesso (Por Fase)
