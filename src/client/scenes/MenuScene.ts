@@ -9,6 +9,10 @@ const DIFFICULTIES = [
   DifficultyLevel.INSANE,
 ];
 
+export function cycleDifficultyIndex(current: number, delta: number, total: number): number {
+  return (current + delta + total) % total;
+}
+
 export class MenuScene extends Phaser.Scene {
   private difficultyIndex = 1;
   private difficultyText!: Phaser.GameObjects.Text;
@@ -47,7 +51,7 @@ export class MenuScene extends Phaser.Scene {
       .setOrigin(0.5);
 
     this.add
-      .text(cx, 320, '< LEFT / RIGHT to change >', {
+      .text(cx, 320, '< Q/E or LEFT/RIGHT to change >', {
         fontSize: '13px',
         color: '#555555',
         fontFamily: 'monospace',
@@ -91,11 +95,12 @@ export class MenuScene extends Phaser.Scene {
 
     kb.on('keydown-LEFT', () => this.changeDifficulty(-1));
     kb.on('keydown-RIGHT', () => this.changeDifficulty(1));
+    kb.on('keydown-Q', () => this.changeDifficulty(-1));
+    kb.on('keydown-E', () => this.changeDifficulty(1));
   }
 
   private changeDifficulty(delta: number): void {
-    this.difficultyIndex =
-      (this.difficultyIndex + delta + DIFFICULTIES.length) % DIFFICULTIES.length;
+    this.difficultyIndex = cycleDifficultyIndex(this.difficultyIndex, delta, DIFFICULTIES.length);
     this.difficultyText.setText(DIFFICULTIES[this.difficultyIndex]);
   }
 }

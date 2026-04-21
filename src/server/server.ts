@@ -80,7 +80,7 @@ const HOST = config.server.host;
 httpServer.listen(PORT, HOST, () => {
   console.log(`
 ╔══════════════════════════════════════╗
-║       🐍 SNAKE BATTLE SERVER 🐍       ║
+║       🐍 SNAKE BATTLE SERVER 🐍      ║
 ╚══════════════════════════════════════╝
 
 📍 Servidor: http://${HOST}:${PORT}

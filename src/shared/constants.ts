@@ -125,6 +125,12 @@ export const UI_COLORS = {
   WARNING: '#FF0000',
 };
 
+// Fruit Spawn
+export const GOLDEN_FRUIT_CHANCE = 0.1; // 10% chance ao spawnar fruta
+
+// UI Timing
+export const GAME_OVER_DELAY_MS = 600;
+
 // Game Limits
 export const MAX_SNAKES = 2;
 export const MAX_SEGMENT_PER_SNAKE = 100;

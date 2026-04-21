@@ -17,7 +17,9 @@ const OPPOSITE_DIRECTION: Record<Direction, Direction> = {
 export class Snake {
   private segments: SegmentPosition[];
   private direction: Direction;
-  private nextDirection: Direction;
+  // One-slot FIFO buffer: accepts at most one pending direction per tick,
+  // preventing rapid key presses from overwriting each other.
+  private directionQueue: Direction[] = [];
   private graphics: Phaser.GameObjects.Graphics;
   private readonly color: number;
   private growPending = 0;
@@ -26,7 +28,6 @@ export class Snake {
   constructor(scene: Phaser.Scene, startX: number, startY: number, length: number, color: number) {
     this.color = color;
     this.direction = Direction.RIGHT;
-    this.nextDirection = Direction.RIGHT;
     this.segments = [];
 
     for (let i = 0; i < length; i++) {
@@ -38,18 +39,25 @@ export class Snake {
   }
 
   setDirection(direction: Direction): void {
-    // Check against nextDirection too to prevent queuing an opposite move
-    // (e.g. UP queued, player presses DOWN before move() fires)
+    const lastQueued = this.directionQueue[this.directionQueue.length - 1] ?? this.direction;
     if (
       direction !== OPPOSITE_DIRECTION[this.direction] &&
-      direction !== OPPOSITE_DIRECTION[this.nextDirection]
+      direction !== OPPOSITE_DIRECTION[lastQueued] &&
+      direction !== lastQueued &&
+      this.directionQueue.length < 1
     ) {
-      this.nextDirection = direction;
+      this.directionQueue.push(direction);
     }
   }
 
   move(): void {
-    this.direction = this.nextDirection;
+    if (this.directionQueue.length > 0) {
+      const next = this.directionQueue.shift()!;
+      // Re-validate: current direction may differ if a previous move changed it
+      if (next !== OPPOSITE_DIRECTION[this.direction]) {
+        this.direction = next;
+      }
+    }
     const head = this.segments[0];
     let newHead: SegmentPosition;
 

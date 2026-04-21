@@ -18,13 +18,13 @@ import {
   SNAKE_COLORS,
   FRUIT_POINTS,
   GOLDEN_FRUIT_POINTS,
+  GOLDEN_FRUIT_CHANCE,
+  GAME_OVER_DELAY_MS,
 } from '@shared/constants';
 
 interface GameSceneData {
   difficulty: DifficultyLevel;
 }
-
-const GOLDEN_FRUIT_CHANCE = 0.1;
 
 export class GameScene extends Phaser.Scene {
   private snake!: Snake;
@@ -149,7 +149,7 @@ export class GameScene extends Phaser.Scene {
 
     this.cameras.main.setBackgroundColor('#330000');
 
-    this.time.delayedCall(600, () => {
+    this.time.delayedCall(GAME_OVER_DELAY_MS, () => {
       this.scene.start('GameOverScene', {
         score: finalScore,
         difficulty: this.difficulty,
