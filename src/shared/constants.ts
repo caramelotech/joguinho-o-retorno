@@ -70,7 +70,7 @@ export const POWER_UP_DURATION_MODIFIERS: { [key in DifficultyLevel]: number } =
 // Power-ups Spawn Chances
 export const POWER_UP_SPAWN_CHANCES: { [key: string]: number } = {
   SPEED_BOOST: 0.15,
-  INVISIBILITY: 0.10,
+  INVISIBILITY: 0.1,
   SPEED_REVERSAL: 0.12,
   SLICE: 0.08,
   INVERT_CONTROLS: 0.07,

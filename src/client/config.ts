@@ -2,9 +2,9 @@
  * Configuração do Cliente Phaser
  */
 
-import Phaser from "phaser";
-import { DifficultyLevel } from "@shared/types";
-import { CANVAS_WIDTH, CANVAS_HEIGHT, TILE_SIZE } from "@shared/constants";
+import Phaser from 'phaser';
+import { DifficultyLevel } from '@shared/types';
+import { CANVAS_WIDTH, CANVAS_HEIGHT, TILE_SIZE } from '@shared/constants';
 
 export interface GameConfig {
   difficulty: DifficultyLevel;
@@ -18,7 +18,7 @@ export const phaser3Config: Phaser.Types.Core.GameConfig = {
   width: CANVAS_WIDTH,
   height: CANVAS_HEIGHT,
   physics: {
-    default: "arcade",
+    default: 'arcade',
     arcade: {
       gravity: {
         y: 0,
