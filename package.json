@@ -6,10 +6,10 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
-    "server:dev": "nodemon --exec 'tsx' src/server/server.ts",
+    "server:dev": "nodemon --exec tsx src/server/server.ts",
     "client:dev": "vite --host",
     "build": "npm run build:client && npm run build:server",
-    "build:server": "tsc src/server --outDir dist/server",
+    "build:server": "esbuild src/server/server.ts --bundle --platform=node --format=esm --outfile=dist/server/server.js --packages=external",
     "build:client": "vite build",
     "start": "node dist/server/server.js",
     "lint": "eslint src/**/*.ts",

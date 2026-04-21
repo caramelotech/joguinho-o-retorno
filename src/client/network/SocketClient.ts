@@ -3,7 +3,7 @@
  * Configurado para Fase 5+ (Online Multiplayer)
  */
 
-import { io, Socket } from "socket.io-client";
+import { io, Socket } from 'socket.io-client';
 
 class SocketClient {
   private socket: Socket | null = null;
@@ -17,30 +17,30 @@ class SocketClient {
       }
 
       this.socket = io({
-        path: "/socket.io",
-        transports: ["websocket", "polling"],
+        path: '/socket.io',
+        transports: ['websocket', 'polling'],
       });
 
-      this.socket.on("connect", () => {
-        console.log("[Socket] Conectado ao servidor:", this.socket?.id);
+      this.socket.on('connect', () => {
+        console.log('[Socket] Conectado ao servidor:', this.socket?.id);
         this.connected = true;
         resolve();
       });
 
-      this.socket.on("disconnect", () => {
-        console.log("[Socket] Desconectado do servidor");
+      this.socket.on('disconnect', () => {
+        console.log('[Socket] Desconectado do servidor');
         this.connected = false;
       });
 
-      this.socket.on("error", (error) => {
-        console.error("[Socket] Erro:", error);
+      this.socket.on('error', (error) => {
+        console.error('[Socket] Erro:', error);
         reject(error);
       });
 
       // Retry logic
       setTimeout(() => {
         if (!this.connected) {
-          reject(new Error("Connection timeout"));
+          reject(new Error('Connection timeout'));
         }
       }, 5000);
     });
