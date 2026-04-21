@@ -39,6 +39,9 @@ export const FRUITS_COUNT: { [key in DifficultyLevel]: number } = {
   [DifficultyLevel.INSANE]: 1,
 };
 
+export const MIN_FRUITS = 1;
+export const MAX_FRUITS = 4;
+
 // Spawn Rate de frutas (em ms)
 export const FRUIT_SPAWN_RATE: { [key in DifficultyLevel]: number } = {
   [DifficultyLevel.EASY]: 2000,
@@ -124,6 +127,12 @@ export const UI_COLORS = {
   ACCENT: '#00FF00',
   WARNING: '#FF0000',
 };
+
+// Fruit Spawn
+export const GOLDEN_FRUIT_CHANCE = 0.1; // 10% chance ao spawnar fruta
+
+// UI Timing
+export const GAME_OVER_DELAY_MS = 600;
 
 // Game Limits
 export const MAX_SNAKES = 2;

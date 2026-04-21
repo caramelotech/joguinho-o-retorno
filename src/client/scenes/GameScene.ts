@@ -14,17 +14,18 @@ import {
   INITIAL_SNAKE_LENGTH,
   GAME_SPEEDS,
   FRUITS_COUNT,
+  MAX_FRUITS,
   UI_COLORS,
   SNAKE_COLORS,
   FRUIT_POINTS,
   GOLDEN_FRUIT_POINTS,
+  GOLDEN_FRUIT_CHANCE,
+  GAME_OVER_DELAY_MS,
 } from '@shared/constants';
 
 interface GameSceneData {
   difficulty: DifficultyLevel;
 }
-
-const GOLDEN_FRUIT_CHANCE = 0.1;
 
 export class GameScene extends Phaser.Scene {
   private snake!: Snake;
@@ -134,6 +135,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private spawnFruit(): void {
+    if (this.fruits.length >= MAX_FRUITS) return;
     const occupied = [...this.snake.getSegments(), ...this.fruits.map((f) => ({ x: f.x, y: f.y }))];
     const pos = Fruit.findFreePosition(occupied);
     if (pos === null) return;
@@ -149,7 +151,7 @@ export class GameScene extends Phaser.Scene {
 
     this.cameras.main.setBackgroundColor('#330000');
 
-    this.time.delayedCall(600, () => {
+    this.time.delayedCall(GAME_OVER_DELAY_MS, () => {
       this.scene.start('GameOverScene', {
         score: finalScore,
         difficulty: this.difficulty,

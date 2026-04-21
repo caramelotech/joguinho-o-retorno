@@ -21,11 +21,12 @@ export class Fruit {
   private graphics: Phaser.GameObjects.Graphics;
 
   static findFreePosition(occupied: GridPosition[]): GridPosition | null {
+    const occupiedSet = new Set(occupied.map((pos) => `${pos.x},${pos.y}`));
     const free: GridPosition[] = [];
 
     for (let x = 0; x < GRID_WIDTH; x++) {
       for (let y = 0; y < GRID_HEIGHT; y++) {
-        if (!occupied.some((pos) => pos.x === x && pos.y === y)) {
+        if (!occupiedSet.has(`${x},${y}`)) {
           free.push({ x, y });
         }
       }
