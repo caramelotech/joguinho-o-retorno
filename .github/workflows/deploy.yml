@@ -25,6 +25,9 @@ jobs:
           node-version: 24
           cache: npm
 
+      - name: Update lockfile for Linux
+        run: npm install --package-lock-only
+
       - name: Install dependencies
         run: npm ci
 
