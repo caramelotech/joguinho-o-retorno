@@ -18,7 +18,7 @@ export interface GameSession {
 
 // Placeholder: Será mantido em memória na Fase 1
 export const createGameSession = (players: string[], difficulty: DifficultyLevel): GameSession => ({
-  id: Math.random().toString(36).substr(2, 9),
+  id: Math.random().toString(36).slice(2, 11),
   players,
   difficulty,
   startTime: new Date(),
