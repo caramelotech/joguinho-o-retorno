@@ -9,10 +9,9 @@ import { Snake } from './Snake';
 function makeScene(): Phaser.Scene {
   return {
     add: {
-      graphics: () => ({
-        clear: vi.fn(),
-        fillStyle: vi.fn(),
-        fillRect: vi.fn(),
+      rectangle: () => ({
+        setAlpha: vi.fn().mockReturnThis(),
+        setPosition: vi.fn(),
         destroy: vi.fn(),
       }),
     },
@@ -164,14 +163,20 @@ describe('Snake direction queue', () => {
 describe('Snake.checkBodyCollision', () => {
   it('returns false when the head does not overlap any segment of the other snake', () => {
     const snake = new Snake(makeScene(), 5, 5, 1, 0);
-    const otherSegments = [{ x: 1, y: 1 }, { x: 2, y: 1 }];
+    const otherSegments = [
+      { x: 1, y: 1 },
+      { x: 2, y: 1 },
+    ];
     expect(snake.checkBodyCollision(otherSegments)).toBe(false);
   });
 
   it('returns true when the head overlaps the body of another snake', () => {
     const snake = new Snake(makeScene(), 5, 5, 1, 0);
     // Other snake occupies (5, 5), same as this snake's head
-    const otherSegments = [{ x: 9, y: 9 }, { x: 5, y: 5 }];
+    const otherSegments = [
+      { x: 9, y: 9 },
+      { x: 5, y: 5 },
+    ];
     expect(snake.checkBodyCollision(otherSegments)).toBe(true);
   });
 

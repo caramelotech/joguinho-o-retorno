@@ -1,18 +1,11 @@
 import Phaser from 'phaser';
 import { FruitType } from '@shared/types';
-import { TILE_SIZE, GRID_WIDTH, GRID_HEIGHT } from '@shared/constants';
+import { TILE_SIZE, GRID_WIDTH, GRID_HEIGHT, FRUIT_COLORS, FRUIT_PADDING } from '@shared/constants';
 
 interface GridPosition {
   x: number;
   y: number;
 }
-
-const FRUIT_COLORS: Record<FruitType, number> = {
-  [FruitType.APPLE]: 0xff3333,
-  [FruitType.GOLDEN]: 0xffd700,
-};
-
-const FRUIT_PADDING = 6;
 
 export class Fruit {
   readonly x: number;
@@ -20,21 +13,24 @@ export class Fruit {
   readonly type: FruitType;
   private graphics: Phaser.GameObjects.Graphics;
 
+  // Reservoir sampling: O(n) time, O(1) extra space, uniform distribution.
   static findFreePosition(occupied: GridPosition[]): GridPosition | null {
     const occupiedSet = new Set(occupied.map((pos) => `${pos.x},${pos.y}`));
-    const free: GridPosition[] = [];
+    let chosen: GridPosition | null = null;
+    let count = 0;
 
     for (let x = 0; x < GRID_WIDTH; x++) {
       for (let y = 0; y < GRID_HEIGHT; y++) {
         if (!occupiedSet.has(`${x},${y}`)) {
-          free.push({ x, y });
+          count++;
+          if (Math.random() < 1 / count) {
+            chosen = { x, y };
+          }
         }
       }
     }
 
-    if (free.length === 0) return null;
-
-    return free[Math.floor(Math.random() * free.length)];
+    return chosen;
   }
 
   constructor(scene: Phaser.Scene, pos: GridPosition, type: FruitType = FruitType.APPLE) {

@@ -20,7 +20,10 @@ describe('Fruit.findFreePosition', () => {
   });
 
   it('never returns an occupied position', () => {
-    const occupied = [{ x: 3, y: 7 }, { x: 10, y: 10 }];
+    const occupied = [
+      { x: 3, y: 7 },
+      { x: 10, y: 10 },
+    ];
     // Run many times to catch random failures
     for (let i = 0; i < 50; i++) {
       const pos = Fruit.findFreePosition(occupied);

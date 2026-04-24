@@ -2,12 +2,7 @@ import Phaser from 'phaser';
 import { DifficultyLevel } from '@shared/types';
 import { CANVAS_WIDTH, CANVAS_HEIGHT, UI_COLORS } from '@shared/constants';
 
-const DIFFICULTIES = [
-  DifficultyLevel.EASY,
-  DifficultyLevel.NORMAL,
-  DifficultyLevel.HARD,
-  DifficultyLevel.INSANE,
-];
+const DIFFICULTIES = Object.values(DifficultyLevel);
 
 export function cycleDifficultyIndex(current: number, delta: number, total: number): number {
   return (current + delta + total) % total;

@@ -76,9 +76,7 @@ export class GameScene extends Phaser.Scene {
     this.isRunning = true;
   }
 
-  update(): void {
-    // Tick-based logic is handled by the timer event, not here.
-  }
+  update(): void {}
 
   private drawGrid(): void {
     const graphics = this.add.graphics();

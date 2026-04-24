@@ -11,13 +11,14 @@ export class ScoreBoard {
         fontSize: '18px',
         color: UI_COLORS.TEXT,
         fontFamily: 'monospace',
-        backgroundColor: '#00000066',
+        backgroundColor: UI_COLORS.SCOREBOARD_BG,
         padding: { x: 8, y: 4 },
       })
       .setDepth(10);
   }
 
   add(points: number): void {
+    if (points <= 0) return;
     this.score += points;
     this.scoreText.setText(`SCORE: ${this.score}`);
   }

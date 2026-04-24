@@ -1,8 +1,4 @@
-/**
- * Constantes compartilhadas entre Cliente e Servidor
- */
-
-import { DifficultyLevel } from './types';
+import { DifficultyLevel, Direction, FruitType } from './types';
 
 // Grid Configuration
 export const GRID_WIDTH = 20;
@@ -27,6 +23,13 @@ export const GAME_SPEEDS: { [key in DifficultyLevel]: number } = {
   [DifficultyLevel.INSANE]: 60,
 };
 
+export const OPPOSITE_DIRECTION: Record<Direction, Direction> = {
+  [Direction.UP]: Direction.DOWN,
+  [Direction.DOWN]: Direction.UP,
+  [Direction.LEFT]: Direction.RIGHT,
+  [Direction.RIGHT]: Direction.LEFT,
+};
+
 // Score Configuration
 export const FRUIT_POINTS = 10;
 export const GOLDEN_FRUIT_POINTS = 20;
@@ -42,35 +45,25 @@ export const FRUITS_COUNT: { [key in DifficultyLevel]: number } = {
 export const MIN_FRUITS = 1;
 export const MAX_FRUITS = 4;
 
-// Spawn Rate de frutas (em ms)
-export const FRUIT_SPAWN_RATE: { [key in DifficultyLevel]: number } = {
-  [DifficultyLevel.EASY]: 2000,
-  [DifficultyLevel.NORMAL]: 3000,
-  [DifficultyLevel.HARD]: 4000,
-  [DifficultyLevel.INSANE]: 4000,
-};
-
 // Power-ups Configuration
 export const POWER_UP_SPAWN_CHANCE = 0.15; // 15% chance ao comer fruta
 
 export const POWER_UP_DURATIONS: { [key: string]: number } = {
-  SPEED_BOOST: 8000, // 8 segundos
-  INVISIBILITY: 5000, // 5 segundos
-  SPEED_REVERSAL: 8000, // 8 segundos
-  SLICE: 0, // Instantâneo
-  INVERT_CONTROLS: 6000, // 6 segundos
-  PETRIFY: 3000, // 3 segundos
+  SPEED_BOOST: 8000,
+  INVISIBILITY: 5000,
+  SPEED_REVERSAL: 8000,
+  SLICE: 0,
+  INVERT_CONTROLS: 6000,
+  PETRIFY: 3000,
 };
 
-// Power-up Duration Modifiers
 export const POWER_UP_DURATION_MODIFIERS: { [key in DifficultyLevel]: number } = {
-  [DifficultyLevel.EASY]: 1.2, // +20%
+  [DifficultyLevel.EASY]: 1.2,
   [DifficultyLevel.NORMAL]: 1.0,
-  [DifficultyLevel.HARD]: 0.8, // -20%
-  [DifficultyLevel.INSANE]: 0.7, // -30%
+  [DifficultyLevel.HARD]: 0.8,
+  [DifficultyLevel.INSANE]: 0.7,
 };
 
-// Power-ups Spawn Chances
 export const POWER_UP_SPAWN_CHANCES: { [key: string]: number } = {
   SPEED_BOOST: 0.15,
   INVISIBILITY: 0.1,
@@ -84,40 +77,21 @@ export const POWER_UP_SPAWN_CHANCES: { [key: string]: number } = {
 export const OBSTACLE_COUNTS: { [key in DifficultyLevel]: number } = {
   [DifficultyLevel.EASY]: 0,
   [DifficultyLevel.NORMAL]: 0,
-  [DifficultyLevel.HARD]: 8, // 5-10 blocos
-  [DifficultyLevel.INSANE]: 17, // 15-20 blocos
+  [DifficultyLevel.HARD]: 8,
+  [DifficultyLevel.INSANE]: 17,
 };
 
 export const MOVING_OBSTACLE_COUNTS: { [key in DifficultyLevel]: number } = {
   [DifficultyLevel.EASY]: 0,
   [DifficultyLevel.NORMAL]: 0,
   [DifficultyLevel.HARD]: 0,
-  [DifficultyLevel.INSANE]: 1, // 1-2 obstáculos móveis
-};
-
-// Keyboard Keys
-export const PLAYER_1_KEYS = {
-  UP: 'W',
-  DOWN: 'S',
-  LEFT: 'A',
-  RIGHT: 'D',
-};
-
-export const PLAYER_2_KEYS = {
-  UP: 'ArrowUp',
-  DOWN: 'ArrowDown',
-  LEFT: 'ArrowLeft',
-  RIGHT: 'ArrowRight',
-};
-
-export const GLOBAL_KEYS = {
-  PAUSE: 'P',
+  [DifficultyLevel.INSANE]: 1,
 };
 
 // Colors
 export const SNAKE_COLORS = {
-  P1: '#00FF00', // Verde neon
-  P2: '#FF00FF', // Magenta neon
+  P1: '#00FF00',
+  P2: '#FF00FF',
 };
 
 export const UI_COLORS = {
@@ -126,14 +100,18 @@ export const UI_COLORS = {
   TEXT: '#FFFFFF',
   ACCENT: '#00FF00',
   WARNING: '#FF0000',
+  SCOREBOARD_BG: '#00000066',
 };
+
+export const FRUIT_COLORS: Record<FruitType, number> = {
+  [FruitType.APPLE]: 0xff3333,
+  [FruitType.GOLDEN]: 0xffd700,
+};
+
+export const FRUIT_PADDING = 6;
 
 // Fruit Spawn
 export const GOLDEN_FRUIT_CHANCE = 0.1; // 10% chance ao spawnar fruta
 
 // UI Timing
 export const GAME_OVER_DELAY_MS = 600;
-
-// Game Limits
-export const MAX_SNAKES = 2;
-export const MAX_SEGMENT_PER_SNAKE = 100;

@@ -1,18 +1,11 @@
 import Phaser from 'phaser';
 import { Direction } from '@shared/types';
-import { TILE_SIZE, GRID_WIDTH, GRID_HEIGHT } from '@shared/constants';
+import { TILE_SIZE, GRID_WIDTH, GRID_HEIGHT, OPPOSITE_DIRECTION } from '@shared/constants';
 
 interface SegmentPosition {
   x: number;
   y: number;
 }
-
-const OPPOSITE_DIRECTION: Record<Direction, Direction> = {
-  [Direction.UP]: Direction.DOWN,
-  [Direction.DOWN]: Direction.UP,
-  [Direction.LEFT]: Direction.RIGHT,
-  [Direction.RIGHT]: Direction.LEFT,
-};
 
 export class Snake {
   private segments: SegmentPosition[];
@@ -20,22 +13,21 @@ export class Snake {
   // Two-slot FIFO buffer: lets players pre-queue one turn ahead without
   // allowing unbounded growth from rapid key presses.
   private directionQueue: Direction[] = [];
-  private graphics: Phaser.GameObjects.Graphics;
+  private readonly scene: Phaser.Scene;
   private readonly color: number;
+  private segmentRects: Phaser.GameObjects.Rectangle[] = [];
   private growPending = 0;
   isAlive = true;
 
   constructor(scene: Phaser.Scene, startX: number, startY: number, length: number, color: number) {
+    this.scene = scene;
     this.color = color;
     this.direction = Direction.RIGHT;
     this.segments = [];
-
     for (let i = 0; i < length; i++) {
       this.segments.push({ x: startX - i, y: startY });
+      this.segmentRects.push(this.makeRect(startX - i, startY, i === 0));
     }
-
-    this.graphics = scene.add.graphics();
-    this.draw();
   }
 
   setDirection(direction: Direction): void {
@@ -57,6 +49,7 @@ export class Snake {
         this.direction = next;
       }
     }
+
     const head = this.segments[0];
     let newHead: SegmentPosition;
 
@@ -73,17 +66,26 @@ export class Snake {
       case Direction.RIGHT:
         newHead = { x: head.x + 1, y: head.y };
         break;
+      default:
+        throw new Error(`Unexpected direction: ${this.direction as string}`);
     }
 
     this.segments.unshift(newHead);
+    this.segmentRects[0].setAlpha(0.75);
 
     if (this.growPending > 0) {
       this.growPending--;
+      this.segmentRects.unshift(this.makeRect(newHead.x, newHead.y, true));
     } else {
+      const tailRect = this.segmentRects.pop()!;
       this.segments.pop();
+      tailRect.setPosition(
+        newHead.x * TILE_SIZE + TILE_SIZE / 2,
+        newHead.y * TILE_SIZE + TILE_SIZE / 2
+      );
+      tailRect.setAlpha(1);
+      this.segmentRects.unshift(tailRect);
     }
-
-    this.draw();
   }
 
   grow(amount = 1): void {
@@ -114,20 +116,19 @@ export class Snake {
   }
 
   destroy(): void {
-    this.graphics.destroy();
+    this.segmentRects.forEach((r) => r.destroy());
+    this.segmentRects = [];
   }
 
-  private draw(): void {
-    this.graphics.clear();
-    this.segments.forEach((seg, index) => {
-      const alpha = index === 0 ? 1 : 0.75;
-      this.graphics.fillStyle(this.color, alpha);
-      this.graphics.fillRect(
-        seg.x * TILE_SIZE + 1,
-        seg.y * TILE_SIZE + 1,
+  private makeRect(x: number, y: number, isHead: boolean): Phaser.GameObjects.Rectangle {
+    return this.scene.add
+      .rectangle(
+        x * TILE_SIZE + TILE_SIZE / 2,
+        y * TILE_SIZE + TILE_SIZE / 2,
         TILE_SIZE - 2,
-        TILE_SIZE - 2
-      );
-    });
+        TILE_SIZE - 2,
+        this.color
+      )
+      .setAlpha(isHead ? 1 : 0.75);
   }
 }
